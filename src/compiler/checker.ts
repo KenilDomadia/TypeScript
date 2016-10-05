@@ -19216,6 +19216,8 @@ namespace ts {
 
         function initializeTypeChecker() {
             // Bind all source files and propagate errors
+            performance.mark("heapBeforeBind");
+
             for (const file of host.getSourceFiles()) {
                 bindSourceFile(file, compilerOptions);
             }
@@ -19264,6 +19266,8 @@ namespace ts {
 
             // Setup global builtins
             addToSymbolTable(globals, builtinGlobals, Diagnostics.Declaration_name_conflicts_with_built_in_global_identifier_0);
+
+            performance.mark("heapAfterBind");
 
             getSymbolLinks(undefinedSymbol).type = undefinedWideningType;
             getSymbolLinks(argumentsSymbol).type = getGlobalType("IArguments");
